@@ -1,0 +1,59 @@
+@startuml
+autonumber
+skinparam shadowing false
+
+actor "Candidato/a" as Candidate
+participant "Interfaz web" as UI
+participant "API Python" as API
+participant "Servicio de autenticacion" as Auth
+participant "Orquestador" as Orchestrator
+participant "Adaptador / entrevistador" as Interviewer
+participant "Evaluador" as Evaluator
+database "data.json" as JSON
+
+Candidate -> UI : Iniciar sesion
+UI -> API : POST /api/login
+API -> Auth : login_user()
+Auth -> JSON : verificar hash y crear sesion
+JSON --> Auth : cuenta y sesion con expiracion
+Auth --> API : token de sesion
+API --> UI : 200 JSON + cookie
+UI --> Candidate : mostrar espacio privado
+
+Candidate -> UI : Iniciar practica
+UI -> API : POST /api/interview/start
+API -> Orchestrator : start_interview()
+Orchestrator -> JSON : leer perfil y crear sesion
+JSON --> Orchestrator : nivel y preferencias
+Orchestrator -> Interviewer : seleccionar y adaptar pregunta
+Interviewer --> Orchestrator : pregunta clara y pasos opcionales
+Orchestrator -> JSON : guardar sesion activa
+Orchestrator --> API : sessionId + pregunta
+API --> UI : 200 JSON
+UI --> Candidate : mostrar pregunta, sin cronometro
+
+loop Por cada respuesta
+  Candidate -> UI : Escribir respuesta
+  UI -> API : POST /api/interview/answer
+  API -> Orchestrator : answer_interview()
+  Orchestrator -> Evaluator : evaluar habilidades relacionadas
+  Evaluator --> Orchestrator : puntuacion y habilidades coincidentes
+  note right of Evaluator
+    El texto original solo se procesa
+    en memoria y no se guarda.
+  end note
+  Orchestrator -> JSON : guardar puntuacion y habilidades
+  alt Quedan preguntas
+    Orchestrator -> Interviewer : adaptar siguiente pregunta
+    Interviewer --> Orchestrator : siguiente pregunta
+    Orchestrator --> API : retroalimentacion + pregunta
+    API --> UI : 200 JSON
+    UI --> Candidate : mostrar siguiente pregunta
+  else Practica completada
+    Orchestrator -> JSON : marcar sesion completada
+    Orchestrator --> API : resumen orientativo
+    API --> UI : 200 JSON
+    UI --> Candidate : mostrar resumen y fortalezas
+  end
+end
+@enduml

@@ -1,0 +1,122 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+
+class CandidateProfile {
+  name: str
+  level: str
+  accommodations: list[str]
+}
+
+class UserAccount {
+  id: str
+  email: str
+  password_salt: str
+  password_hash: str
+  profile: CandidateProfile
+  sessions: list[InterviewSession]
+}
+
+class AuthSession {
+  token_hash: str
+  user_id: str
+  expires_at: timestamp
+}
+
+class AccommodationCatalog {
+  +labels: dict
+}
+
+class Job {
+  id: str
+  title: str
+  company: str
+  level: str
+  supports: list[str]
+  skills: list[str]
+}
+
+class InterviewSession {
+  id: str
+  jobId: str
+  status: str
+  adapted: bool
+  results: list[EvaluationResult]
+}
+
+class Question {
+  prompt: str
+  steps: list[str]
+  skills: list[str]
+}
+
+class EvaluationResult {
+  score: int
+  matched: list[str]
+}
+
+class JsonRepository {
+  path: Path
+  +read()
+  +write(data)
+}
+
+class AuthenticationService {
+  +register_user(payload)
+  +login_user(payload)
+  +authenticate_token(token)
+  +revoke_token(token)
+}
+
+class ProfileService {
+  +save_profile(payload)
+}
+
+class InterviewOrchestrator {
+  +start_interview()
+  +answer_interview(payload)
+}
+
+class AdaptationAgent {
+  +format_question(question, profile)
+}
+
+class EvaluatorAgent {
+  +evaluate_answer(answer, question)
+}
+
+class JobMatcher {
+  +match_jobs(profile)
+}
+
+class ImpactMetrics {
+  +aggregate(sessions)
+}
+
+UserAccount "1" *-- "1" CandidateProfile
+UserAccount "1" *-- "0..*" InterviewSession : practica
+UserAccount "1" -- "0..*" AuthSession : inicia sesion
+InterviewSession "1" o-- "1..*" Question : presenta
+InterviewSession "1" o-- "0..*" EvaluationResult : conserva solo
+AuthenticationService ..> UserAccount
+AuthenticationService ..> AuthSession
+AuthenticationService ..> JsonRepository
+JobMatcher ..> CandidateProfile
+JobMatcher ..> Job
+InterviewOrchestrator ..> AdaptationAgent
+InterviewOrchestrator ..> EvaluatorAgent
+InterviewOrchestrator ..> JsonRepository
+ProfileService ..> JsonRepository
+JobMatcher ..> JsonRepository
+ImpactMetrics ..> JsonRepository
+
+note right of EvaluationResult
+No incluye el texto de la respuesta
+ni datos de salud o diagnosticos.
+end note
+
+note bottom of JsonRepository
+Modelo logico del MVP.
+Los registros se serializan a data.json.
+end note
+@enduml

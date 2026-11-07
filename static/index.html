@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3b2418">
+  <meta name="description" content="Practica entrevistas a tu ritmo y encuentra vacantes inclusivas.">
+  <title>IncluTalent | Entrevistas a tu ritmo</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="IncluTalent, inicio">
+      <span class="brand-mark" aria-hidden="true">i</span>
+      <span>inclu<span class="brand-light">talent</span></span>
+    </a>
+    <div class="topbar-actions">
+      <span class="privacy-note" id="privacy-note" hidden><span class="privacy-dot"></span> Tus preferencias son privadas</span>
+      <button class="contrast-button" id="contrast-toggle" type="button" aria-pressed="false">Alto contraste</button>
+      <button class="contrast-button logout-button" id="logout-button" type="button" hidden>Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="auth-screen" id="auth-screen" aria-labelledby="auth-title" hidden>
+      <div class="auth-intro">
+        <p class="eyebrow">UN ESPACIO SOLO PARA TI</p>
+        <h1 id="auth-title">Tu proceso, a tu ritmo.</h1>
+        <p>Inicia sesión para continuar con tus preferencias y prácticas privadas.</p>
+        <div class="auth-promise"><span aria-hidden="true">♡</span><span>Tus datos de perfil y tus prácticas solo son visibles desde tu cuenta.</span></div>
+      </div>
+      <div class="card auth-card">
+        <div class="auth-switch" role="group" aria-label="Tipo de acceso">
+          <button class="auth-mode active" type="button" data-auth-mode="login" aria-pressed="true">Iniciar sesión</button>
+          <button class="auth-mode" type="button" data-auth-mode="register" aria-pressed="false">Crear cuenta</button>
+        </div>
+        <form id="login-form" class="auth-form">
+          <h2>Qué bueno verte.</h2>
+          <p>Ingresa a tu espacio personal.</p>
+          <label class="field" for="login-email">Correo electrónico
+            <input id="login-email" name="email" type="email" maxlength="254" autocomplete="email" required placeholder="tu@correo.com">
+          </label>
+          <label class="field" for="login-password">Contraseña
+            <input id="login-password" name="password" type="password" maxlength="128" autocomplete="current-password" required>
+          </label>
+          <button class="button button-primary auth-submit" type="submit">Iniciar sesión <span aria-hidden="true">→</span></button>
+          <p class="auth-message" id="login-message" role="alert" aria-live="polite"></p>
+        </form>
+        <form id="register-form" class="auth-form" hidden>
+          <h2>Empecemos por ti.</h2>
+          <p>Crea una cuenta para guardar tus preferencias.</p>
+          <label class="field" for="register-name">¿Cómo te llamamos?
+            <input id="register-name" name="name" type="text" maxlength="80" autocomplete="given-name" required>
+          </label>
+          <label class="field" for="register-email">Correo electrónico
+            <input id="register-email" name="email" type="email" maxlength="254" autocomplete="email" required placeholder="tu@correo.com">
+          </label>
+          <label class="field" for="register-password">Crea una contraseña
+            <input id="register-password" name="password" type="password" minlength="10" maxlength="128" autocomplete="new-password" required aria-describedby="password-hint">
+          </label>
+          <small class="password-hint" id="password-hint">Usa al menos 10 caracteres.</small>
+          <button class="button button-primary auth-submit" type="submit">Crear mi cuenta <span aria-hidden="true">→</span></button>
+          <p class="auth-message" id="register-message" role="alert" aria-live="polite"></p>
+        </form>
+        <p class="auth-footnote">Solo para desarrollo: usa cuentas y contraseñas de prueba. Nunca ingreses credenciales reales o reutilizadas.</p>
+      </div>
+    </section>
+    <div id="app-shell" hidden>
+    <section class="welcome" id="inicio" aria-labelledby="welcome-title">
+      <div>
+        <p class="eyebrow">TU TALENTO, A TU RITMO</p>
+        <h1 id="welcome-title">Un proceso que se adapta a ti.</h1>
+        <p class="welcome-copy">Practica con calma, encuentra oportunidades y muestra lo que sabes hacer.</p>
+      </div>
+      <div class="welcome-mark" aria-hidden="true"><span>✳</span><small>Sin prisa.<br>Sin barreras.</small></div>
+    </section>
+
+    <nav class="tabs" aria-label="Secciones principales">
+      <button class="tab active" type="button" data-view="panel" aria-current="page">Mi espacio</button>
+      <button class="tab" type="button" data-view="practice">Practicar entrevista</button>
+      <button class="tab" type="button" data-view="jobs">Vacantes inclusivas</button>
+      <button class="tab" type="button" data-view="impact">Impacto</button>
+    </nav>
+
+    <section class="view active" id="view-panel" aria-labelledby="panel-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">PANEL PERSONAL</p><h2 id="panel-title" tabindex="-1">Hola<span id="hello-name"></span>, este espacio es tuyo.</h2></div>
+        <button class="button button-outline" type="button" data-open-view="profile">Editar mi perfil <span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="metric-grid" aria-label="Resumen de tu actividad">
+        <article class="metric-card"><span class="metric-icon peach" aria-hidden="true">✦</span><p>Practicas completadas</p><strong id="metric-interviews">0</strong><small>Entrevistas a tu ritmo</small></article>
+        <article class="metric-card"><span class="metric-icon green" aria-hidden="true">✓</span><p>Respuestas evaluadas</p><strong id="metric-responses">0</strong><small>Enfocadas en tus habilidades</small></article>
+        <article class="metric-card"><span class="metric-icon lavender" aria-hidden="true">↗</span><p>Promedio de práctica</p><strong id="metric-score">—</strong><small>Sobre 5 · solo orientativo</small></article>
+      </div>
+      <div class="dashboard-grid">
+        <article class="card practice-card">
+          <div class="card-top"><span class="icon-tile" aria-hidden="true">✎</span><span class="tag">A TU RITMO</span></div>
+          <h3>Practica antes de tu próxima entrevista</h3>
+          <p>Preguntas claras, sin cronómetro y con retroalimentación para ayudarte a crecer.</p>
+          <button class="button button-primary" type="button" data-open-view="practice">Empezar práctica <span aria-hidden="true">→</span></button>
+        </article>
+        <article class="card profile-summary">
+          <div class="card-heading"><div><p class="eyebrow">CONFIGURACIÓN</p><h3>Cómo te gusta participar</h3></div><span class="profile-icon" aria-hidden="true">♡</span></div>
+          <p id="profile-level" class="summary-level">Nivel de experiencia: Junior</p>
+          <ul id="preference-summary" class="preference-list"></ul>
+          <button class="text-button" type="button" data-open-view="profile">Ajustar preferencias <span aria-hidden="true">→</span></button>
+        </article>
+      </div>
+      <article class="card featured-jobs">
+        <div class="section-heading compact"><div><p class="eyebrow">OPORTUNIDADES PARA TI</p><h3>Vacantes que pueden encajar</h3></div><button class="text-button" type="button" data-open-view="jobs">Ver todas <span aria-hidden="true">→</span></button></div>
+        <div id="featured-jobs" class="job-list"></div>
+      </article>
+    </section>
+
+    <section class="view" id="view-profile" aria-labelledby="profile-title">
+      <div class="section-heading"><div><p class="eyebrow">TU PERFIL</p><h2 id="profile-title" tabindex="-1">Cuéntanos cómo te gustaría participar.</h2><p class="section-copy">Solo preguntamos por tus preferencias para adaptar la experiencia; no por diagnósticos.</p></div></div>
+      <form class="card form-card" id="profile-form">
+        <div class="form-grid">
+          <label class="field">¿Cómo te llamamos?
+            <input id="candidate-name" name="name" maxlength="80" autocomplete="given-name" required placeholder="Tu nombre">
+          </label>
+          <label class="field">Nivel de experiencia
+            <select id="candidate-level" name="level">
+              <option value="trainee">Estoy empezando</option>
+              <option value="junior">Tengo algo de experiencia</option>
+              <option value="intermedio">Tengo experiencia intermedia</option>
+            </select>
+          </label>
+        </div>
+        <fieldset class="preference-fieldset">
+          <legend>¿Qué te ayudaría durante una entrevista?</legend>
+          <p class="field-hint">Puedes elegir varias opciones o cambiar tu selección cuando quieras.</p>
+          <div id="accommodation-options" class="option-grid"></div>
+        </fieldset>
+        <div class="privacy-callout"><span aria-hidden="true">♡</span><p><strong>Tu privacidad importa.</strong> Estas preferencias se usan para personalizar tu práctica. Nunca se muestran como un diagnóstico a una empresa.</p></div>
+        <button class="button button-primary" type="submit">Guardar mis preferencias <span aria-hidden="true">→</span></button>
+        <p class="form-message" id="profile-message" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="view" id="view-practice" aria-labelledby="practice-title">
+      <div class="section-heading"><div><p class="eyebrow">ENTREVISTA DE PRÁCTICA</p><h2 id="practice-title" tabindex="-1">Un espacio seguro para intentarlo.</h2><p class="section-copy">Sin límite de tiempo. Puedes tomarte una pausa o terminar cuando quieras.</p></div></div>
+      <div class="practice-layout">
+        <article class="card interview-card" id="interview-card">
+          <div id="interview-intro">
+            <span class="icon-tile" aria-hidden="true">✎</span>
+            <h3>Vamos paso a paso</h3>
+            <p>Te haremos 3 preguntas relacionadas con tu nivel de experiencia. Al final recibirás sugerencias constructivas.</p>
+            <ul class="intro-points"><li>Lee cada pregunta a tu ritmo.</li><li>No se guarda el texto de tus respuestas.</li><li>La retroalimentación es una guía, no una decisión de contratación.</li></ul>
+            <button class="button button-primary" id="start-interview" type="button">Comenzar cuando esté listo/a <span aria-hidden="true">→</span></button>
+          </div>
+          <div id="question-area" hidden>
+            <div class="question-progress"><span id="question-count"></span><span>Sin cronómetro</span></div>
+            <div class="progress-track" role="progressbar" id="progress-bar" aria-label="Progreso de la entrevista" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"><span id="progress-fill"></span></div>
+            <h3 id="question-prompt" tabindex="-1"></h3>
+            <ol id="question-steps" class="question-steps" hidden></ol>
+            <label class="field" for="answer-input">Tu respuesta</label>
+            <textarea id="answer-input" rows="6" maxlength="4000" placeholder="Escribe tu respuesta aquí. No hay una respuesta perfecta."></textarea>
+            <div class="answer-actions"><button class="button button-primary" id="submit-answer" type="button">Enviar respuesta <span aria-hidden="true">→</span></button><button class="text-button" id="cancel-interview" type="button">Dejarlo por ahora</button></div>
+            <div id="answer-feedback" class="feedback" role="status" aria-live="polite" hidden></div>
+          </div>
+          <div id="interview-finished" hidden>
+            <span class="finish-mark" aria-hidden="true">✦</span><p class="eyebrow">PRÁCTICA COMPLETADA</p><h3>Gracias por intentarlo.</h3>
+            <p id="finish-summary"></p><div id="strength-list" class="strength-list"></div>
+            <p class="small-note">La puntuación orientativa solo considera palabras relacionadas con la pregunta. No mide tu capacidad laboral ni toma decisiones de contratación.</p>
+            <button class="button button-primary" id="practice-again" type="button">Practicar de nuevo</button>
+          </div>
+        </article>
+        <aside class="card reassurance-card"><span class="reassurance-icon" aria-hidden="true">☀</span><h3>Recuerda</h3><p>Esta práctica es tuya. Puedes parar, volver a empezar o cambiar tus preferencias en cualquier momento.</p><button class="text-button" type="button" data-open-view="profile">Cambiar mis preferencias <span aria-hidden="true">→</span></button></aside>
+      </div>
+    </section>
+
+    <section class="view" id="view-jobs" aria-labelledby="jobs-title">
+      <div class="section-heading"><div><p class="eyebrow">OPORTUNIDADES INCLUSIVAS</p><h2 id="jobs-title" tabindex="-1">Vacantes con apoyos claros.</h2><p class="section-copy">Las coincidencias son orientativas. Explora las condiciones antes de postularte.</p></div><span class="tag">VACANTES DE DEMOSTRACIÓN</span></div>
+      <div id="all-jobs" class="jobs-grid"></div>
+    </section>
+
+    <section class="view" id="view-impact" aria-labelledby="impact-title">
+      <div class="section-heading"><div><p class="eyebrow">IMPACTO · ODS 10</p><h2 id="impact-title" tabindex="-1">La inclusión también se puede medir.</h2><p class="section-copy">Métricas agregadas de las prácticas realizadas en este dispositivo.</p></div></div>
+      <div class="metric-grid impact-metrics">
+        <article class="metric-card"><span class="metric-icon peach" aria-hidden="true">✦</span><p>Entrevistas completadas</p><strong id="impact-interviews">0</strong><small>Sesiones de práctica</small></article>
+        <article class="metric-card"><span class="metric-icon green" aria-hidden="true">♡</span><p>Entrevistas adaptadas</p><strong id="impact-adapted">0</strong><small>Con preferencias de accesibilidad</small></article>
+        <article class="metric-card"><span class="metric-icon lavender" aria-hidden="true">↗</span><p>Prácticas adaptadas</p><strong id="impact-rate">0%</strong><small>Proporción de las sesiones</small></article>
+      </div>
+      <article class="card impact-note"><span class="icon-tile" aria-hidden="true">i</span><div><h3>Una nota sobre estas métricas</h3><p>Este MVP registra conteos agregados y puntuaciones, no tus respuestas escritas ni información médica. Los datos se guardan localmente en <code>data.json</code> y no representan resultados de contratación reales.</p></div></article>
+    </section>
+    </div>
+  </main>
+  <footer><span>IncluTalent Agent</span><span>Una práctica más justa empieza con escucharte.</span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

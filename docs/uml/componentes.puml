@@ -1,0 +1,45 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+actor "Candidato/a" as Candidate
+component "Navegador" {
+  component "Interfaz accesible\nHTML + CSS" as UI
+  component "Cliente\nJavaScript" as JS
+  UI -- JS
+}
+
+component "Servidor local Python\nbiblioteca estandar" {
+  component "API HTTP\nAppHandler" as API
+  component "Autenticacion\nregistro y sesiones" as Auth
+  component "Orquestador\nfunciones de aplicacion" as Orchestrator
+  component "Adaptador de perfil\ny preferencias" as ProfileAgent
+  component "Entrevistador\nadaptativo" as InterviewerAgent
+  component "Evaluador\npor competencias" as EvaluatorAgent
+  component "Emparejador\nde vacantes" as MatcherAgent
+  component "Metricas de impacto" as MetricsAgent
+}
+
+database "data.json\nperfiles y resultados agregados" as JSON
+
+Candidate --> UI
+JS --> API : HTTP / JSON
+API --> Orchestrator
+API --> Auth
+Orchestrator --> ProfileAgent
+Orchestrator --> InterviewerAgent
+Orchestrator --> EvaluatorAgent
+Orchestrator --> MatcherAgent
+Orchestrator --> MetricsAgent
+ProfileAgent --> JSON : leer / guardar perfil
+Auth --> JSON : cuentas y hashes de sesiones
+InterviewerAgent --> JSON : guardar estado de sesion
+EvaluatorAgent --> JSON : guardar puntuacion y habilidades
+MatcherAgent --> JSON : leer preferencias
+MetricsAgent --> JSON : leer sesiones agregadas
+
+note bottom of JSON
+Sin base de datos externa.
+Las respuestas escritas no se persisten.
+end note
+@enduml

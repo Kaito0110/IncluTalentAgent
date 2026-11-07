@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Candidato/a" as Candidate
+rectangle "IncluTalent Agent · MVP" {
+  usecase "Configurar perfil y\npreferencias de acceso" as Profile
+  usecase "Practicar entrevista\nadaptada" as Practice
+  usecase "Responder preguntas\nsin limite de tiempo" as Answer
+  usecase "Consultar retroalimentacion\nde habilidades" as Feedback
+  usecase "Explorar vacantes\ninclusivas" as Jobs
+  usecase "Consultar metricas\nagregadas de impacto" as Metrics
+}
+
+Candidate --> Profile
+Candidate --> Practice
+Candidate --> Jobs
+Candidate --> Metrics
+Practice .> Answer : <<include>>
+Practice .> Feedback : <<include>>
+
+note bottom of Feedback
+La retroalimentacion es orientativa.
+No determina contrataciones.
+end note
+@enduml

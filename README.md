@@ -1,5 +1,7 @@
 # IncluTalent Agent — MVP
 
+Link:https://youtu.be/p0fhPWkZKRs
+
 MVP local para practicar entrevistas inclusivas y explorar vacantes de demostración. Incluye registro e inicio de sesión, perfiles separados por cuenta, preferencias de accesibilidad, preguntas adaptadas al nivel, retroalimentación orientativa, coincidencias explicables y métricas agregadas.
 
 ## Requisitos

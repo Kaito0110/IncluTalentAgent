@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#3b2418">
-  <meta name="description" content="Practica entrevistas a tu ritmo y encuentra vacantes inclusivas.">
-  <title>IncluTalent | Entrevistas a tu ritmo</title>
+  <meta name="theme-color" content="#0a0d0f">
+  <meta name="description" content="Preparate para oportunidades laborales con practica de entrevistas y feedback local.">
+  <title>IncluTalent | Preparate para tu proxima oportunidad</title>
   <link rel="stylesheet" href="/styles.css">
   <script src="/app.js" defer></script>
 </head>
@@ -74,13 +74,14 @@
         <h1 id="welcome-title">Un proceso que se adapta a ti.</h1>
         <p class="welcome-copy">Practica con calma, encuentra oportunidades y muestra lo que sabes hacer.</p>
       </div>
-      <div class="welcome-mark" aria-hidden="true"><span>✳</span><small>Sin prisa.<br>Sin barreras.</small></div>
+      <div class="welcome-mark" aria-hidden="true"><span>✳</span><small>Tu talento,<br>tu siguiente paso.</small></div>
     </section>
 
     <nav class="tabs" aria-label="Secciones principales">
       <button class="tab active" type="button" data-view="panel" aria-current="page">Mi espacio</button>
       <button class="tab" type="button" data-view="practice">Practicar entrevista</button>
       <button class="tab" type="button" data-view="jobs">Vacantes inclusivas</button>
+      <button class="tab" type="button" data-view="profile">Mi perfil</button>
       <button class="tab" type="button" data-view="impact">Impacto</button>
     </nav>
 
@@ -98,7 +99,7 @@
         <article class="card practice-card">
           <div class="card-top"><span class="icon-tile" aria-hidden="true">✎</span><span class="tag">A TU RITMO</span></div>
           <h3>Practica antes de tu próxima entrevista</h3>
-          <p>Preguntas claras, sin cronómetro y con retroalimentación para ayudarte a crecer.</p>
+          <p>Preguntas claras, retos técnicos y tiempo flexible para ayudarte a crecer.</p>
           <button class="button button-primary" type="button" data-open-view="practice">Empezar práctica <span aria-hidden="true">→</span></button>
         </article>
         <article class="card profile-summary">
@@ -112,68 +113,121 @@
         <div class="section-heading compact"><div><p class="eyebrow">OPORTUNIDADES PARA TI</p><h3>Vacantes que pueden encajar</h3></div><button class="text-button" type="button" data-open-view="jobs">Ver todas <span aria-hidden="true">→</span></button></div>
         <div id="featured-jobs" class="job-list"></div>
       </article>
+      <article class="card interview-history">
+        <div class="section-heading compact"><div><p class="eyebrow">TU PROGRESO</p><h3>Prácticas recientes</h3></div><button class="text-button" type="button" data-open-view="practice">Practicar otra vez <span aria-hidden="true">→</span></button></div>
+        <div id="interview-history" class="history-list"></div>
+      </article>
     </section>
 
     <section class="view" id="view-profile" aria-labelledby="profile-title">
-      <div class="section-heading"><div><p class="eyebrow">TU PERFIL</p><h2 id="profile-title" tabindex="-1">Cuéntanos cómo te gustaría participar.</h2><p class="section-copy">Solo preguntamos por tus preferencias para adaptar la experiencia; no por diagnósticos.</p></div></div>
+      <div class="section-heading"><div><p class="eyebrow">TU PERFIL</p><h2 id="profile-title" tabindex="-1">Prepara tu espacio en cinco pasos.</h2><p class="section-copy">Puedes crear, consultar, actualizar o reiniciar tu perfil cuando quieras. No preguntamos por diagnósticos.</p></div></div>
       <form class="card form-card" id="profile-form">
+        <p class="profile-step"><span>1</span> ¿Cómo prefieres que te llamemos?</p>
+        <label class="field" for="candidate-name">Nombre o apodo
+          <input id="candidate-name" name="name" maxlength="80" autocomplete="given-name" required placeholder="Tu nombre">
+        </label>
+        <p class="profile-step"><span>2</span> ¿Para qué puesto quieres practicar?</p>
         <div class="form-grid">
-          <label class="field">¿Cómo te llamamos?
-            <input id="candidate-name" name="name" maxlength="80" autocomplete="given-name" required placeholder="Tu nombre">
+          <label class="field" for="target-job">Vacante o puesto
+            <select id="target-job" name="jobId" required></select>
           </label>
-          <label class="field">Nivel de experiencia
-            <select id="candidate-level" name="level">
-              <option value="trainee">Estoy empezando</option>
-              <option value="junior">Tengo algo de experiencia</option>
-              <option value="intermedio">Tengo experiencia intermedia</option>
-            </select>
+          <label class="field" id="custom-job-field" for="custom-job-title" hidden>Nombre del puesto
+            <input id="custom-job-title" name="customJobTitle" maxlength="120" placeholder="Ej. Disenador/a UX">
           </label>
         </div>
+        <p class="profile-step"><span>3</span> ¿Qué experiencia tienes?</p>
+        <label class="field" for="candidate-level">Nivel de experiencia
+          <select id="candidate-level" name="level">
+            <option value="trainee">Estoy empezando</option>
+            <option value="junior">Tengo algo de experiencia</option>
+            <option value="intermedio">Tengo experiencia intermedia</option>
+          </select>
+        </label>
+        <p class="profile-step"><span>4</span> ¿Qué habilidades quieres poner en práctica?</p>
+        <label class="field" for="candidate-skills">Habilidades o herramientas <span class="field-hint">(opcional, separadas por coma; hasta 8)</span>
+          <input id="candidate-skills" name="skills" maxlength="320" placeholder="Ej. comunicacion, Excel, trabajo en equipo">
+        </label>
+        <p class="profile-step"><span>5</span> ¿Qué te ayudaría durante una entrevista?</p>
         <fieldset class="preference-fieldset">
-          <legend>¿Qué te ayudaría durante una entrevista?</legend>
           <p class="field-hint">Puedes elegir varias opciones o cambiar tu selección cuando quieras.</p>
           <div id="accommodation-options" class="option-grid"></div>
         </fieldset>
-        <div class="privacy-callout"><span aria-hidden="true">♡</span><p><strong>Tu privacidad importa.</strong> Estas preferencias se usan para personalizar tu práctica. Nunca se muestran como un diagnóstico a una empresa.</p></div>
+        <div class="privacy-callout"><span aria-hidden="true">♡</span><p><strong>Tu privacidad importa.</strong> El agente funciona en este equipo y no envia tus respuestas a servicios externos. El archivo local de datos limita permisos al usuario actual de Windows.</p></div>
         <button class="button button-primary" type="submit">Guardar mis preferencias <span aria-hidden="true">→</span></button>
         <p class="form-message" id="profile-message" role="status" aria-live="polite"></p>
       </form>
+      <article class="card profile-delete-card">
+        <div><h3>Reiniciar mi perfil</h3><p>Elimina el nombre y las preferencias guardadas. Tu cuenta y el resumen de prácticas se conservan.</p></div>
+        <button class="button button-outline" id="delete-profile" type="button">Eliminar perfil</button>
+      </article>
     </section>
 
     <section class="view" id="view-practice" aria-labelledby="practice-title">
-      <div class="section-heading"><div><p class="eyebrow">ENTREVISTA DE PRÁCTICA</p><h2 id="practice-title" tabindex="-1">Un espacio seguro para intentarlo.</h2><p class="section-copy">Sin límite de tiempo. Puedes tomarte una pausa o terminar cuando quieras.</p></div></div>
+      <div class="section-heading"><div><p class="eyebrow">ENTREVISTA DE PRÁCTICA</p><h2 id="practice-title" tabindex="-1">Un espacio seguro para intentarlo.</h2><p class="section-copy">Practica una entrevista realista con preguntas situacionales y ejercicios técnicos. El tiempo es flexible y nunca enviamos tu respuesta automáticamente.</p></div></div>
       <div class="practice-layout">
         <article class="card interview-card" id="interview-card">
           <div id="interview-intro">
             <span class="icon-tile" aria-hidden="true">✎</span>
-            <h3>Vamos paso a paso</h3>
-            <p>Te haremos 3 preguntas relacionadas con tu nivel de experiencia. Al final recibirás sugerencias constructivas.</p>
-            <ul class="intro-points"><li>Lee cada pregunta a tu ritmo.</li><li>No se guarda el texto de tus respuestas.</li><li>La retroalimentación es una guía, no una decisión de contratación.</li></ul>
+            <h3>Practica para un puesto concreto</h3>
+            <p id="interview-agent-copy">Ollama genera preguntas y feedback en tu equipo usando el puesto y las habilidades de tu perfil.</p>
+            <p class="agent-context" id="interview-context"></p>
+            <label class="field" for="interview-engine">Agente de entrevista
+              <select id="interview-engine">
+                <option value="ollama" selected>Ollama · IA local</option>
+                <option value="rules">Asesor local por reglas</option>
+              </select>
+              <small>Ollama requiere que el servicio esté iniciado y que el modelo configurado esté instalado. No hay cambio automático si no está disponible.</small>
+            </label>
+            <label class="field timer-choice" for="timer-mode">Ritmo del cronómetro
+              <select id="timer-mode">
+                <option value="standard">Tiempo sugerido</option>
+                <option value="extended">Tiempo extendido</option>
+                <option value="off">Sin cronómetro</option>
+              </select>
+              <small>Por dificultad: inicial 1:30, intermedia 3:00 y avanzada 5:00. El tiempo extendido duplica esos valores.</small>
+            </label>
+            <ul class="intro-points"><li>Ollama recibe localmente el puesto, las habilidades del perfil y, al evaluar, tu respuesta. No se conecta a servicios externos.</li><li>Los ejercicios incluyen código, SQL o casos prácticos según el puesto.</li><li>El tiempo depende de la dificultad; puedes pausarlo o practicar sin cronómetro.</li><li>No guardamos el texto de las respuestas; solo se conservan resultados resumidos.</li></ul>
             <button class="button button-primary" id="start-interview" type="button">Comenzar cuando esté listo/a <span aria-hidden="true">→</span></button>
           </div>
           <div id="question-area" hidden>
-            <div class="question-progress"><span id="question-count"></span><span>Sin cronómetro</span></div>
-            <div class="progress-track" role="progressbar" id="progress-bar" aria-label="Progreso de la entrevista" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"><span id="progress-fill"></span></div>
+            <div class="question-progress"><span id="question-count"></span><span id="question-difficulty"></span></div>
+            <div class="progress-track" role="progressbar" id="progress-bar" aria-label="Progreso de la entrevista" aria-valuemin="0" aria-valuemax="5" aria-valuenow="1"><span id="progress-fill"></span></div>
+            <p class="agent-context" id="active-job-title"></p>
+            <section id="timer-panel" class="timer-panel" role="timer" aria-label="Tiempo de práctica" aria-live="off" hidden>
+              <span class="timer-label">Tiempo sugerido</span>
+              <strong id="timer-display" aria-live="off">03:00</strong>
+              <button class="text-button" type="button" id="timer-toggle" aria-pressed="false">Pausar cronómetro</button>
+            </section>
+            <p id="timer-status" class="timer-status" role="status" aria-live="polite"></p>
             <h3 id="question-prompt" tabindex="-1"></h3>
             <ol id="question-steps" class="question-steps" hidden></ol>
-            <label class="field" for="answer-input">Tu respuesta</label>
-            <textarea id="answer-input" rows="6" maxlength="4000" placeholder="Escribe tu respuesta aquí. No hay una respuesta perfecta."></textarea>
+            <section id="technical-task" class="technical-task" hidden>
+              <div class="technical-task-heading"><span class="tag" id="task-language"></span><button class="text-button" type="button" id="copy-starter">Copiar plantilla</button></div>
+              <pre id="starter-code"></pre>
+              <p>Escribe tu solución o razonamiento en el espacio de respuesta. Puedes usar código, pseudocódigo o texto.</p>
+            </section>
+            <label class="field" for="answer-input" id="answer-label">Tu respuesta</label>
+            <textarea id="answer-input" rows="8" maxlength="4000" placeholder="Explica tu razonamiento. No hay una respuesta perfecta."></textarea>
             <div class="answer-actions"><button class="button button-primary" id="submit-answer" type="button">Enviar respuesta <span aria-hidden="true">→</span></button><button class="text-button" id="cancel-interview" type="button">Dejarlo por ahora</button></div>
             <div id="answer-feedback" class="feedback" role="status" aria-live="polite" hidden></div>
           </div>
           <div id="interview-finished" hidden>
             <span class="finish-mark" aria-hidden="true">✦</span><p class="eyebrow">PRÁCTICA COMPLETADA</p><h3>Gracias por intentarlo.</h3>
             <p id="finish-summary"></p><div id="strength-list" class="strength-list"></div>
-            <p class="small-note">La puntuación orientativa solo considera palabras relacionadas con la pregunta. No mide tu capacidad laboral ni toma decisiones de contratación.</p>
+            <p class="small-note">La puntuación orientativa considera palabras relacionadas con la pregunta. No ejecuta ni valida tu código, no mide tu capacidad laboral ni toma decisiones de contratación.</p>
             <button class="button button-primary" id="practice-again" type="button">Practicar de nuevo</button>
           </div>
         </article>
-        <aside class="card reassurance-card"><span class="reassurance-icon" aria-hidden="true">☀</span><h3>Recuerda</h3><p>Esta práctica es tuya. Puedes parar, volver a empezar o cambiar tus preferencias en cualquier momento.</p><button class="text-button" type="button" data-open-view="profile">Cambiar mis preferencias <span aria-hidden="true">→</span></button></aside>
+        <aside class="card reassurance-card"><span class="reassurance-icon" aria-hidden="true">✦</span><h3>Entrevista justa</h3><p>La práctica valora ejemplos y habilidades relacionadas con el puesto. No pregunta ni puntúa sexualidad, género, edad o condiciones de salud. Es una guía local, no una garantía contra los sesgos de contratación.</p><button class="text-button" type="button" data-open-view="profile">Ajustar accesibilidad <span aria-hidden="true">→</span></button></aside>
       </div>
     </section>
 
     <section class="view" id="view-jobs" aria-labelledby="jobs-title">
       <div class="section-heading"><div><p class="eyebrow">OPORTUNIDADES INCLUSIVAS</p><h2 id="jobs-title" tabindex="-1">Vacantes con apoyos claros.</h2><p class="section-copy">Las coincidencias son orientativas. Explora las condiciones antes de postularte.</p></div><span class="tag">VACANTES DE DEMOSTRACIÓN</span></div>
+      <div class="fair-hiring-note">
+        <h3>Más oportunidades, menos barreras</h3>
+        <p>Las vacantes de esta demo muestran habilidades y apoyos laborales. No registramos orientación sexual, género ni diagnósticos; las preferencias de accesibilidad son opcionales y sirven para adaptar tu experiencia.</p>
+      </div>
       <div id="all-jobs" class="jobs-grid"></div>
     </section>
 
@@ -184,11 +238,11 @@
         <article class="metric-card"><span class="metric-icon green" aria-hidden="true">♡</span><p>Entrevistas adaptadas</p><strong id="impact-adapted">0</strong><small>Con preferencias de accesibilidad</small></article>
         <article class="metric-card"><span class="metric-icon lavender" aria-hidden="true">↗</span><p>Prácticas adaptadas</p><strong id="impact-rate">0%</strong><small>Proporción de las sesiones</small></article>
       </div>
-      <article class="card impact-note"><span class="icon-tile" aria-hidden="true">i</span><div><h3>Una nota sobre estas métricas</h3><p>Este MVP registra conteos agregados y puntuaciones, no tus respuestas escritas ni información médica. Los datos se guardan localmente en <code>data.json</code> y no representan resultados de contratación reales.</p></div></article>
+      <article class="card impact-note"><span class="icon-tile" aria-hidden="true">i</span><div><h3>Una nota sobre estas métricas</h3><p>Este MVP registra conteos agregados y puntuaciones, no tus respuestas escritas ni información médica. Los datos se guardan localmente en <code>data.json</code> y no representan resultados de contratación reales. La simulación reduce algunos sesgos al evaluar criterios relacionados con el puesto, pero no puede eliminar por sí sola la discriminación del mercado laboral.</p></div></article>
     </section>
     </div>
   </main>
-  <footer><span>IncluTalent Agent</span><span>Una práctica más justa empieza con escucharte.</span></footer>
+  <footer><span>IncluTalent Agent</span><span>Prepárate para tu próxima oportunidad.</span></footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
